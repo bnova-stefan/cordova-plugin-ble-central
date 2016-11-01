@@ -39,7 +39,11 @@
     [super pluginInitialize];
 
     peripherals = [NSMutableSet set];
-    manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) {
+        manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{CBCentralManagerOptionShowPowerAlertKey:[NSNumber numberWithBool:NO]}];   
+    } else {
+        manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    }
 
     connectCallbacks = [NSMutableDictionary new];
     connectCallbackLatches = [NSMutableDictionary new];
